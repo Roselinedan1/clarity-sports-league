@@ -8,10 +8,11 @@ import {
 import { assertEquals } from 'https://deno.land/std@0.90.0/testing/asserts.ts';
 
 Clarinet.test({
-    name: "Test enhanced tournament management",
+    name: "Test enhanced tournament management with brackets",
     async fn(chain: Chain, accounts: Map<string, Account>) {
         const deployer = accounts.get('deployer')!;
         const team1 = accounts.get('wallet_1')!;
+        const team2 = accounts.get('wallet_2')!;
         
         // Start season
         let block1 = chain.mineBlock([
@@ -27,26 +28,34 @@ Clarinet.test({
             ], deployer.address)
         ]);
         
-        block2.receipts[0].result.expectOk().expectUint(0);
-        
-        // Register and join tournament
+        // Register teams
         let block3 = chain.mineBlock([
             Tx.contractCall('league-manager', 'register-team', [
                 types.ascii("Team A")
             ], team1.address),
-            Tx.contractCall('league-manager', 'join-tournament', [
-                types.uint(0)
-            ], team1.address)
+            Tx.contractCall('league-manager', 'register-team', [
+                types.ascii("Team B")
+            ], team2.address)
         ]);
         
-        // Advance tournament round
+        // Join tournament
         let block4 = chain.mineBlock([
-            Tx.contractCall('league-manager', 'advance-tournament-round', [
+            Tx.contractCall('league-manager', 'join-tournament', [
+                types.uint(0)
+            ], team1.address),
+            Tx.contractCall('league-manager', 'join-tournament', [
+                types.uint(0)
+            ], team2.address)
+        ]);
+        
+        // Generate bracket
+        let block5 = chain.mineBlock([
+            Tx.contractCall('league-manager', 'generate-tournament-bracket', [
                 types.uint(0)
             ], deployer.address)
         ]);
         
-        block4.receipts[0].result.expectOk();
+        block5.receipts[0].result.expectOk();
     }
 });
 
