@@ -7,7 +7,7 @@ A blockchain-based sports league management system that allows:
 - Result recording
 - Automatic standings calculation
 - Season management
-- Tournament organization
+- Tournament organization with automatic bracket generation
 
 ## Features
 
@@ -15,17 +15,20 @@ A blockchain-based sports league management system that allows:
 - Team records (wins/losses/draws)
 - Match history
 - League standings
+- Tournament brackets
 
 ### Season Management
 - Create and manage multiple seasons
 - Track season-specific statistics
 - Historical season records
+- Season leaderboards
 
 ### Tournament System
 - Create tournaments within seasons
 - Team registration for tournaments
-- Tournament brackets and progression
+- Automatic bracket generation and progression
 - Tournament winners and history
+- Match validation for tournament rounds
 
 All data is stored on the Stacks blockchain ensuring transparency and immutability of league records.
 
@@ -38,3 +41,4 @@ Tournaments provide a way to organize special competitions within seasons:
 - Automatic bracket generation
 - Tournament-specific match tracking
 - Winner recording and history
+- Round progression validation
